@@ -43,6 +43,12 @@
                          Delete
                      </a>
                  </td>
+                 <td>
+                     <a class="btn btn-success"
+                        th:href="@{editUser(id=${u.id}, keyword=${keyword}, page=${currentPage})}">
+                         Edit
+                     </a>
+                 </td>
              </tr>
              </tbody>
          </table>

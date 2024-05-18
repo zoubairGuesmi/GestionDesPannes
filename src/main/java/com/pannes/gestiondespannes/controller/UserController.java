@@ -2,11 +2,13 @@ package com.pannes.gestiondespannes.controller;
 
 import com.pannes.gestiondespannes.entities.User;
 import com.pannes.gestiondespannes.repositories.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,22 +18,6 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
-
-//    @GetMapping("/register")
-//    public String showRegistrationForm(Model model) {
-//        model.addAttribute("user", new User());
-//        return "registration";
-//    }
-//
-//    @PostMapping("/register")
-//    public String inscription(User user, Model model){
-//        if (userRepository.findByNom(user.getNom()) != null){
-//            model.addAttribute("message", "user already exists");
-//            return "registration";
-//        }
-//        userRepository.save(user);
-//        return "redirect:/login";
-//    }
 
     @GetMapping("/index")
     public String Users(Model model,
@@ -63,10 +49,31 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/formUser")
+    @GetMapping("/formUsers")
     public String formUser(Model model){
         model.addAttribute("user", new User());
         return "formUsers";
+    }
+
+    @PostMapping("/save")
+    public String saveUser(Model model,@Valid User user, BindingResult bindingResult,
+                           @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "") String keyword){
+        if (bindingResult.hasErrors())
+            return "formUsers";
+        userRepository.save(user);
+        return "redirect:/index?page="+page+"&keyword="+keyword;
+    }
+
+    @GetMapping("/editUser")
+    public String editUser(Model model, Long id, String keyword, int page){
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null)
+            throw new RuntimeException("user not found");
+        model.addAttribute("user", user);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("page",page);
+        return "editUser";
     }
 
 }
