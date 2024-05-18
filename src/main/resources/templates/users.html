@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container mt-2">
+<div class="card">
+     <div class="card-header"> Liste des users</div>
+     <div class="card-body">
+         <form method="get" th:action="@{index}">
+             <label>Key word</label>
+             <input type="text" name="keyword" th:value="${keyword}">
+             <button type="submit" class="btn btn-primary">Chercher</button>
+         </form>
+         <table class="table">
+             <thead>
+             <tr>
+                 <th>ID</th>
+                 <th>Nom</th>
+                 <th>Prénom</th>
+                 <th>Email</th>
+                 <th>Mot de passe</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr th:each="u:${listUsers}">
+                 <td th:text="${u.getId()}"></td>
+                 <td th:text="${u.getNom()}"></td>
+                 <td th:text="${u.getPrenom()}"></td>
+                 <td th:text="${u.getEmail()}"></td>
+                 <td th:text="${u.getPassword()}"></td>
+                 <td>
+                     <a onclick="return confirm('Are you sure')" class="btn btn-danger"
+                        th:href="@{delete(id=${u.id}, keyword=${keyword}, page=${currentPage})}">
+                         Delete
+                     </a>
+                 </td>
+             </tr>
+             </tbody>
+         </table>
+         <ul class="nav nav-pills">
+             <li th:each="page,staus:${pages}">
+                 <a th:class="${staus.index==currentPage?
+                 'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+                    th:text="${staus.index}"
+                 th:href="@{index(page=${staus.index}, keyword=${keyword})}">
+                 </a>
+             </li>
+         </ul>
+     </div>
+</div>
+    </div>
+</div>
+</body>
+</html>

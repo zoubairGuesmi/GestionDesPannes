@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Form Users</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div layout:fragment="content1">
+        <form method="post" th:action="@{save}">
+            <div>
+                <label>Nom</label>
+                <input class="form-control" type="text" name="nom" th:value="${user.getNom()}">
+                <span th:errors="${user.getNom()}"></span>
+            </div>
+            <div>
+                <label>Nom</label>
+                <input class="form-control" type="text" name="prenom" th:value="${user.getPrenom()}">
+                <span th:errors="${user.getPrenom()}"></span>
+            </div>
+            <div>
+                <label>Nom</label>
+                <input class="form-control" type="email" name="email" th:value="${user.getEmail()}">
+                <span th:errors="${user.getEmail()}"></span>
+            </div>
+            <div>
+                <label>Nom</label>
+                <input class="form-control" type="password" name="password" th:value="${user.getPassword()}">
+                <span th:errors="${user.getPassword()}"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</body>
+</html>
