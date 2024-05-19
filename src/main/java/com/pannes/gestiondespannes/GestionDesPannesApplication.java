@@ -1,7 +1,6 @@
 package com.pannes.gestiondespannes;
 
-import com.pannes.gestiondespannes.entities.User;
-import com.pannes.gestiondespannes.repositories.UserRepository;
+import com.pannes.gestiondespannes.repositories.PatientRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +14,7 @@ public class GestionDesPannesApplication {
     }
 
     @Bean
-    CommandLineRunner init(UserRepository userRepository) {
+    CommandLineRunner init(PatientRepository patientRepository) {
         return args -> {
 //            userRepository.save(User.builder()
 //                            .id(null)
@@ -25,8 +24,8 @@ public class GestionDesPannesApplication {
 //                            .password("12384")
 //                    .build());
 
-            userRepository.findAll().forEach(user ->
-                    System.out.println(user.getNom()));
+            patientRepository.findAll().forEach(patient ->
+                    System.out.println(patient.getNom()));
         };
     }
 

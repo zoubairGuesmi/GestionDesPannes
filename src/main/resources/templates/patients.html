@@ -8,12 +8,26 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <style>
+        .password-input {
+            border: none;
+            background: none;
+            outline: none;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .password-input:focus {
+            border: none;
+            outline: none;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content1">
     <div class="container mt-2">
 <div class="card">
-     <div class="card-header"> Liste des users</div>
+     <div class="card-header"> Liste des Patients</div>
      <div class="card-body">
          <form method="get" th:action="@{index}">
              <label>Key word</label>
@@ -31,21 +45,23 @@
              </tr>
              </thead>
              <tbody>
-             <tr th:each="u:${listUsers}">
-                 <td th:text="${u.getId()}"></td>
-                 <td th:text="${u.getNom()}"></td>
-                 <td th:text="${u.getPrenom()}"></td>
-                 <td th:text="${u.getEmail()}"></td>
-                 <td th:text="${u.getPassword()}"></td>
+             <tr th:each="p:${listPatients}">
+                 <td th:text="${p.getId()}"></td>
+                 <td th:text="${p.getNom()}"></td>
+                 <td th:text="${p.getPrenom()}"></td>
+                 <td th:text="${p.getEmail()}"></td>
+                 <td>
+                     <input type="password" th:value="${p.getPassword()}" readonly class="password-input">
+                 </td>
                  <td>
                      <a onclick="return confirm('Are you sure')" class="btn btn-danger"
-                        th:href="@{delete(id=${u.id}, keyword=${keyword}, page=${currentPage})}">
+                        th:href="@{delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
                          Delete
                      </a>
                  </td>
                  <td>
                      <a class="btn btn-success"
-                        th:href="@{editUser(id=${u.id}, keyword=${keyword}, page=${currentPage})}">
+                        th:href="@{editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
                          Edit
                      </a>
                  </td>
